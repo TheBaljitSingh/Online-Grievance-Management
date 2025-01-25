@@ -1,0 +1,62 @@
+# Ignore .env files in both client and server
+/client/.env
+/server/.env
+.env
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment variables
+.env
+/client/.env
+/server/.env
+
+# Build directories
+/build/
+dist/
+
+# Logs
+*.log
+logs/
+
+# Dependency directories
+bower_components/
+jspm_packages/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE or Editor specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# Coverage reports (for testing tools like Jest, Mocha)
+coverage/
+
+# Templating or Preprocessor files
+*.css.map
+*.scssc
+
+# Firebase
+.firebase/
+
+# AWS config
+.aws/
+
+# Tailwind CSS build artifacts
+tailwind.config.js
+
+# Miscellaneous
+*.tgz
+*.bak
+*.tmp
+
+# Misc project-specific build artifacts
+*.env.local
+*.env.production
