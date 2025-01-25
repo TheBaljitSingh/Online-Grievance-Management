@@ -22,6 +22,9 @@ function App() {
 
   return (
     <>
+  
+
+
     <div className='min-h-screen flex flex-col bg-white'>
 
 
@@ -50,7 +53,6 @@ function App() {
        
       </footer>
                   </div>
-     
     </>
   )
 }

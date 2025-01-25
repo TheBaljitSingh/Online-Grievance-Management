@@ -4,6 +4,66 @@ import Grievance from "../models/grievanceModel.js";
 import {sendToken} from "../utils/jwtToken.js"
 import {sendEmail} from "../utils/sendEmail.js"
 import jwt from 'jsonwebtoken';
+import { OAuth2Client } from "google-auth-library";
+
+const client = new OAuth2Client(process.env.Google_ClientId);
+
+
+
+export const googleAuth = async(req, res)=>{
+
+    const { token } = req.body;
+
+    // console.log("Google Token from client", token);
+
+    // body me aa raha hai token
+
+  try {
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: process.env.Google_ClientId, // Use your exact Google Client ID
+      });
+      
+    const payload = ticket.getPayload();
+
+
+    // console.log(payload);
+
+
+    // Create or find user in your database
+    const user = await User.findOneAndUpdate(
+      { email: payload.email },
+      { fullname: payload.name },
+      { upsert: true, new: true }
+    );
+
+
+    const ntoken = jwt.sign({id:user._id},process.env.JWT_SECRET,{
+        expiresIn:process.env.JWT_EXPIRE
+    })
+
+    const option = {
+        expires:new Date(
+        Date.now()+process.env.COOKIE_EXPIRE*24*60*60*1000
+        ),
+        httpOnly:true,
+    };
+
+    res.status(200).cookie("token", ntoken, option).json({
+        success: true,
+        user, // Example payload
+        token, // Your generated JWT token
+      });
+      
+
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ message: 'Invalid Google Token', error });
+  }
+}
+
+
+
 
 
 export const getAllGrievance = async(req, res)=>{

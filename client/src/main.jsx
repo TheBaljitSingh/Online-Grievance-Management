@@ -15,6 +15,8 @@ import ChatUser from './components/ChatUser.jsx'
 import ChatAdmin from "./components/ChatAdmin.jsx"
 
 import { useAuth } from "./context/AuthContext.jsx";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
 
 const SupportChat = ()=>{
   const {user} = useAuth();
@@ -32,7 +34,8 @@ const SupportChat = ()=>{
 
 createRoot(document.getElementById('root')).render(
 
-  
+  <GoogleOAuthProvider clientId="491540068639-p971i6u3810kv90tn8ut3hgob21d20ju.apps.googleusercontent.com">
+
     <AuthProvider>
 
     <BrowserRouter>
@@ -63,6 +66,7 @@ createRoot(document.getElementById('root')).render(
     </Routes>
     </BrowserRouter>
     </AuthProvider>
+    </GoogleOAuthProvider>
 
   
 )

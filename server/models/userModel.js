@@ -19,11 +19,11 @@ const userSchema = mongoose.Schema({
     },
     mobile: {
         type: String, // Use String to handle phone numbers with leading zeros
-        required: 'Please enter your mobile',
+        // required: 'Please enter your mobile',
     },
     password: {
         type: String,
-        required: 'Please enter your password',
+        // required: 'Please enter your password',
     },
     role: {
         type: String,
