@@ -45,10 +45,10 @@ function App() {
 
       </main>
 
-      <footer className="bg-black text-white">
+      <footer className="bg-gray-700 text-white">
         <div className='flex item-center justify-center'>
           {/* <p>hel</p> */}
-        @thebaljitsingh
+        made with ❤️by @thebaljitsingh
         </div>
        
       </footer>

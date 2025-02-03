@@ -38,7 +38,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="relative flex items-center h-full" ref={menuRef}>
+    <div className="relative flex items-center h-full " ref={menuRef} >
       {/* Fullname Button */}
       <button
         className="hover:cursor-pointer bg-white text-green-800 px-4 py-2 rounded-md text-sm font-medium hover:bg-green-100 transition duration-300 shadow-md"
@@ -49,29 +49,29 @@ const Profile = () => {
 
       {/* Logout Menu */}
       {isMenuOpen && (
-  <div className="absolute left-0 mt-28 bg-white px-4 py-2 rounded-md text-sm font-medium shadow-md">
-    <div className="flex flex-col space-y-4 ">
-      <button
-        className="hover:cursor-pointer text-green-800  transition duration-300 w-full text-left"
-        onClick={() => navigate('/grievance')}
-      >
-        Grievance
-      </button>
-      <button
-        className="hover:cursor-pointer text-green-800  transition duration-300 w-full text-left"
-        onClick={() => navigate('/support-chat')}
-      >
-        Live Support Chat
-      </button>
-      <button
-        className="hover:cursor-pointer text-red-800 transition duration-300 w-full text-left"
-        onClick={logout}
-      >
-        Logout
-      </button>
+    <div className="absolute mt-44 right-0 w-48 bg-white px-4 py-2 rounded-md text-sm font-medium shadow-md">
+      <div className="flex flex-col space-y-4">
+        <button
+          className="hover:cursor-pointer text-green-800 transition duration-300 w-full text-left"
+          onClick={() => navigate('/grievance')}
+        >
+          Grievance
+        </button>
+        <button
+          className="hover:cursor-pointer text-green-800 transition duration-300 w-full text-left"
+          onClick={() => navigate('/support-chat')}
+        >
+          Live Support Chat
+        </button>
+        <button
+          className="hover:cursor-pointer text-red-800 transition duration-300 w-full text-left"
+          onClick={logout}
+        >
+          Logout
+        </button>
+      </div>
     </div>
-  </div>
-)}
+  )}
 
     </div>
   );

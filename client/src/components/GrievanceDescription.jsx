@@ -58,7 +58,7 @@ const GrievanceDescription = () => {
         <p><strong>Supporting Document:</strong> <a href={grievance.supportingDocument} target="_blank" rel="noopener noreferrer" className='hover:cursor-pointer'>View Document</a></p>
 
         <div className="max-w-full break-words">
-          <strong> Department:</strong> <span className="  ">{grievance.grievanceDescription}</span>
+          <strong> Grievance Description:</strong> <span className="  ">{grievance.grievanceDescription}</span>
 
 
         </div>

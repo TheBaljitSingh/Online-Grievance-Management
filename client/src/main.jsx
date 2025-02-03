@@ -16,6 +16,7 @@ import ChatAdmin from "./components/ChatAdmin.jsx"
 
 import { useAuth } from "./context/AuthContext.jsx";
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import AdminDashboard from "./components/AdminDashboard.jsx"
 
 
 const SupportChat = ()=>{
@@ -56,7 +57,7 @@ createRoot(document.getElementById('root')).render(
       <Route path='/register-grievance' element={<RegisterGrievance/>} />
       <Route path='/support-chat'  element={<SupportChat/>} />
 
-      <Route path='/grievance' element={<MyGrievance/>} >
+      <Route path='/grievance' element={ <MyGrievance/>} >
 
         <Route path=':GrievanceNumber' element={<GrievanceDescription/>} />
       
