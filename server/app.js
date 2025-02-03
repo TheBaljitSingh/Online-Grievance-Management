@@ -29,27 +29,67 @@ const io = new Server(server, {
 
 let onlineUsers = [];
 
+let adminSocketId = null; // Store the Admin's socket ID
+
 io.on("connection", (socket) => {
+
   console.log(`Socket is connected:  ${socket.id}`);
 
-  onlineUsers.push(socket.id); // Add to the list of online users
+  socket.on("admin", ()=>{
+    adminSocketId = socket.id;
+    console.log(`Admin Connected: ${adminSocketId}`);
+
+  })
+
 
   // Broadcast the online users list
   io.emit("online-users", onlineUsers);
 
+  socket.on("user-connected", (user) => {
+    onlineUsers.push({ id: socket.id, user });
+    io.emit("online-users", onlineUsers); // Emit updated online users list
+  });
+
+
   socket.on("send-message", (message) => {
     // Save message to DB if needed
-    Message.create(message);
+    // Message.create(message);
 
-    // Send message to the intended recipient
-    io.to(message.recipientId).emit("receive-message", message);
+    if(adminSocketId){
+      io.to(adminSocketId).emit("receive-message", message); // why not socket.to
+
+    }else{
+      console.log("Admin is not online")
+    }
   });
+
+  socket.on("admin-reply", (message)=>{
+    io.to(message.recipientId).emit("receive-message", message);
+  })
+
+
+  socket.on("admin-disconnected", (adminSocketId) => {
+    // Remove admin socket from the online users list
+    onlineUsers = onlineUsers.filter(user => user.id !== adminSocketId);
+    io.emit("online-users", onlineUsers);
+  });
+
+  socket.on("user-disconnected", (userSocketId) => {
+    onlineUsers = onlineUsers.filter((user) => user.id !== userSocketId);
+    io.emit("online-users", onlineUsers);
+    console.log(`User disconnected: ${userSocketId}`);
+  });
+
+
+
 
   socket.on("disconnect", () => {
-    onlineUsers = onlineUsers.filter((user) => user !== socket.id);
-    io.emit("online-users", onlineUsers); // Update the list of online users
+    // Remove user by their socket id
+    onlineUsers = onlineUsers.filter((user) => user.id !== socket.id);
+    io.emit("online-users", onlineUsers); // Emit updated list of users
     console.log(`Socket disconnected: ${socket.id}`);
   });
+
 });
 
 app.use(express.json());
