@@ -46,8 +46,9 @@ export const googleAuth = async(req, res)=>{
         expires:new Date(
         Date.now()+process.env.COOKIE_EXPIRE*24*60*60*1000
         ),
-        httpOnly:true,
-        sameSite: "Lax", 
+        httpOnly: true,
+        secure: true,
+        sameSite: "None"
     };
 
     res.status(200).cookie("token", ntoken, option).json({
