@@ -47,6 +47,7 @@ export const googleAuth = async(req, res)=>{
         Date.now()+process.env.COOKIE_EXPIRE*24*60*60*1000
         ),
         httpOnly:true,
+        sameSite: "Lax", 
     };
 
     res.status(200).cookie("token", ntoken, option).json({
