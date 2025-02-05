@@ -7,28 +7,130 @@ import axios from 'axios';
 import Cookies from "js-cookie"
 
 
+// custom hooks for mouse pointer
+const mousePointer = ()=>{
+  const [ position, setPosition] = useState({x:0,y:0});
+
+
+  const handleMouseMove = (e)=>{
+    // position.x=e.clientX;
+    // position.y=e.clientY;
+
+    setPosition({x:e.clientX, y:e.clientY});
+
+  }
+
+  useEffect(()=>{
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return ()=>{
+      window.removeEventListener("mousemove", handleMouseMove);
+    }
+
+  });
+
+  return position;
+}
+
+/*
+// just for learning purpose created custom hooks:
+
+
+const useIsOnline = ()=>{
+
+  const [isOnline, setIsOnline] = useState(window.navigator.onLine);
+
+  // onlline
+
+  useEffect(()=>{
+    window.addEventListener("online", ()=>{
+      setIsOnline(true);
+    })
+    window.addEventListener("offline", ()=>{
+      setIsOnline(false);
+    })
+
+  }, [])
+
+ return isOnline;
+
+}
+
+
+
+
+function useDebounce  (inputValue, timer){
+
+  const [deboundeValue, setDebounceValue] = useState(inputValue);
+
+    useEffect(()=>{
+    let timeoutNumber = setTimeout(()=>{
+
+      setDebounceValue(inputValue);
+
+    },timer)
+
+    return ()=>{
+      
+      clearTimeout(timeoutNumber);
+    }
+
+
+  }, [inputValue])
+
+
+
+  return deboundeValue;
+
+}
+
+
+
+*/
 
 function App() {
-  // const {user, logout, login} = useAuth();
 
-  // useEffect(() => {
-    
-  // }, [login, logout]);
+  const position = mousePointer();
 
+
+  /*
+  // just for learning purpose inporting custom hooks
   
-
-
-  console.log(import.meta.env.VITE_BACKEND);
-
+  const [inputValue, setInputValue] = useState();
+  
+  const debounceValue = useDebounce(inputValue, 300);
+  
+  useEffect(()=>{
+    
+    // now here fetch with the debounce value if changed
+    
+  },[debounceValue])
+  
+  
+  */
+  // now here you have to access the debounce valule
+  
   return (
     <>
-  
+
+<p className='absolute bg-white mt-17 p-1 rounded-md'>
+
+  {`x: ${position.x} y: ${position.y}`}
+</p>
 
 
-    <div className='min-h-screen flex flex-col bg-white'>
+
+   
+
+    <div className='min-h-screen flex flex-col '>
+
+
 
 
 <Navbar/>
+
+
 
     <main className="flex-grow flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
 
