@@ -105,9 +105,9 @@ function App() {
         </main>
 
         {/* Footer */}
-        <footer className="bg-gray-400 opacity-80 text-gray-300 text-center py-4 mt-16">
+        {/* <footer className="bg-gray-400 opacity-80 text-gray-300 text-center py-4 mt-16">
           <p>thebaljitsingh</p>
-        </footer>
+        </footer> */}
       </div>
     </div>
     </>
