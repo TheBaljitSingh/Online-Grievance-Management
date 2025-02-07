@@ -17,6 +17,8 @@ import ChatAdmin from "./components/ChatAdmin.jsx"
 import { useAuth } from "./context/AuthContext.jsx";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import AdminDashboard from "./components/AdminDashboard.jsx"
+import MouseMoveEffect from './components/Mouse-move-effect.jsx'
+import Unauthorize from './components/Unauthorize.jsx'
 
 
 const SupportChat = ()=>{
@@ -27,7 +29,7 @@ const SupportChat = ()=>{
   } else if (user?.role==='user') {
     return <ChatUser />;
   } else {
-    return <div>Please log in to access support chat.</div>;
+    return <Unauthorize/>;
   }
 
 }
@@ -40,7 +42,9 @@ createRoot(document.getElementById('root')).render(
     <AuthProvider>
 
     <BrowserRouter>
+    <MouseMoveEffect/>
     <Routes>
+
 
 
       <Route path='/' element={<App/>} />

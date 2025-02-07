@@ -155,7 +155,7 @@ export default function Navbar() {
           <div className="flex justify-between items-center">
             <div className="text-xl font-semibold text-white"> <a href="/">  Grievance Portal</a></div>
             <div className="hidden md:flex justify-center items-center space-x-4">
-              <Link
+              {/* <Link
                 to="/check-status"
                 className="text-white hover:text-green-200 transition duration-300"
               >
@@ -166,7 +166,7 @@ export default function Navbar() {
                 className="text-white hover:text-green-200 transition duration-300"
               >
                 Register Grievance
-              </Link>
+              </Link> */}
 
 
 

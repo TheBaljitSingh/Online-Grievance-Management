@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router'
 import { useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import axios from 'axios';
+// import MouseMoveEffect from "../src/components/Mouse-move-effect"
 
 import { FaFileAlt, FaSearch, FaComments } from "react-icons/fa";
 
@@ -10,7 +11,6 @@ import { FaFileAlt, FaSearch, FaComments } from "react-icons/fa";
 import Cookies from "js-cookie"
 
 
-// custom hooks for mouse pointer
 const mousePointer = ()=>{
   const [ position, setPosition] = useState({x:0,y:0});
 
@@ -36,164 +36,82 @@ const mousePointer = ()=>{
   return position;
 }
 
-/*
-// just for learning purpose created custom hooks:
 
-
-const useIsOnline = ()=>{
-
-  const [isOnline, setIsOnline] = useState(window.navigator.onLine);
-
-  // onlline
-
-  useEffect(()=>{
-    window.addEventListener("online", ()=>{
-      setIsOnline(true);
-    })
-    window.addEventListener("offline", ()=>{
-      setIsOnline(false);
-    })
-
-  }, [])
-
- return isOnline;
-
-}
-
-
-
-
-function useDebounce  (inputValue, timer){
-
-  const [deboundeValue, setDebounceValue] = useState(inputValue);
-
-    useEffect(()=>{
-    let timeoutNumber = setTimeout(()=>{
-
-      setDebounceValue(inputValue);
-
-    },timer)
-
-    return ()=>{
-      
-      clearTimeout(timeoutNumber);
-    }
-
-
-  }, [inputValue])
-
-
-
-  return deboundeValue;
-
-}
-
-
-
-*/
 
 function App() {
 
   const position = mousePointer();
 
-
-  /*
-  // just for learning purpose inporting custom hooks
-  
-  const [inputValue, setInputValue] = useState();
-  
-  const debounceValue = useDebounce(inputValue, 300);
-  
-  useEffect(()=>{
-    
-    // now here fetch with the debounce value if changed
-    
-  },[debounceValue])
-  
-  
-  */
-  // now here you have to access the debounce valule
   
   return (
     <>
 
-<p className='absolute bg-white mt-17 p-1 rounded-md'>
+<div className="relative min-h-screen bg-gray-50 text-gray-900">
+      {/* Background gradients */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-100 via-gray-50 to-gray-200" />
+        <div className="absolute right-0 top-0 h-[400px] w-[400px] bg-blue-400/20 blur-[80px]" />
+        <div className="absolute bottom-0 left-0 h-[400px] w-[400px] bg-purple-400/20 blur-[80px]" />
+      </div>
 
-  {`x: ${position.x} y: ${position.y}`}
-</p>
+      <div className="relative z-10">
+        <Navbar />
 
+        {/* Mouse Position Indicator */}
+        <p className="fixed top-4 left-4 mt-14 text-balck text-sm px-2 py-1 rounded-md shadow-lg">
+          {`x: ${position.x} y: ${position.y}`}
+        </p>
 
+        <main className="flex flex-col items-center justify-center px-6 py-16">
+          <div className="text-center max-w-3xl">
+            <h1 className="text-4xl sm:text-5xl font-bold text-green-600 mb-4">
+              Online Grievance Management
+            </h1>
+            <p className="text-gray-700 text-lg">
+              Efficiently manage and resolve grievances with our online platform.
+            </p>
+          </div>
 
-   
-
-    <div className='min-h-screen flex flex-col '>
-
-
-
-
-<Navbar/>
-
-
-
-<main className="flex h-full flex-grow flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
-    <div className="h-screen flex flex-col justify-center items-center text-center mb-24">
-      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-green-800 mb-4">
-        <span className="block">Online Grievance</span>
-        <span className="block">Management</span>
-      </h1>
-      <p className="mt-3 max-w-md mx-auto text-base text-gray-600 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-        Efficiently manage and resolve grievances with our state-of-the-art online platform. Experience swift
-        resolutions and transparent communication.
-      </p>
+          {/* Key Features Section */}
+          <section className="mt-16 w-full max-w-5xl px-4">
+            <h2 className="text-3xl font-semibold text-gray-800 text-center mb-8">Key Features</h2>
+            <div className="grid md:grid-cols-3 gap-8">
+  <Link to="/register-grievance" className="p-6 rounded-lg shadow-lg flex flex-col items-center hover:bg-green-100 transition">
+    <div className="bg-green-500 p-4 rounded-full mb-4 text-white text-3xl">
+      <FaFileAlt />
     </div>
+    <h3 className="text-xl font-semibold text-gray-800 mb-2">Register Grievance</h3>
+    <p className="text-gray-600 text-sm">Easily file grievances with a user-friendly interface.</p>
+  </Link>
 
-    <div className="h-screen w-full bg-gray-100 py-16 px-6">
-      <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-8">Key Features</h2>
-        <p className="text-gray-600 text-lg mb-12">Enhance your experience with our advanced grievance management features.</p>
-        
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
-            <div className="bg-green-500 p-4 rounded-full mb-4 text-white text-3xl">
-              <FaFileAlt />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">Register Grievance</h3>
-            <p className="text-gray-600 text-sm">Easily file grievances with a user-friendly interface.</p>
-          </div>
+  <Link to="/check-status" className="p-6 rounded-lg shadow-lg flex flex-col items-center hover:bg-blue-100 transition">
+    <div className="bg-blue-500 p-4 rounded-full mb-4 text-white text-3xl">
+      <FaSearch />
+    </div>
+    <h3 className="text-xl font-semibold text-gray-800 mb-2">Track Grievance</h3>
+    <p className="text-gray-600 text-sm">Monitor real-time updates and progress of your complaints.</p>
+  </Link>
 
-          <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
-            <div className="bg-blue-500 p-4 rounded-full mb-4 text-white text-3xl">
-              <FaSearch />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">Track Grievance</h3>
-            <p className="text-gray-600 text-sm">Monitor real-time updates and progress of your complaints.</p>
-          </div>
+  <Link to="/support-chat" className="p-6 rounded-lg shadow-lg flex flex-col items-center hover:bg-purple-100 transition">
+    <div className="bg-purple-500 p-4 rounded-full mb-4 text-white text-3xl">
+      <FaComments />
+    </div>
+    <h3 className="text-xl font-semibold text-gray-800 mb-2">Chat with Admin</h3>
+    <p className="text-gray-600 text-sm">Get instant support and direct communication with the admin.</p>
+  </Link>
+</div>
 
-          <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
-            <div className="bg-purple-500 p-4 rounded-full mb-4 text-white text-3xl">
-              <FaComments />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">Chat with Admin</h3>
-            <p className="text-gray-600 text-sm">Get instant support and direct communication with the admin.</p>
-          </div>
-        </div>
+          </section>
+        </main>
+
+        {/* Footer */}
+        <footer className="bg-gray-400 opacity-80 text-gray-300 text-center py-4 mt-16">
+          <p>thebaljitsingh</p>
+        </footer>
       </div>
     </div>
-  </main>
-
-    
-
-
-
-      <footer className="bg-gray-700 text-white">
-        <div className='flex item-center justify-center'>
-          {/* <p>hel</p> */}
-        thebaljitsingh
-        </div>
-       
-      </footer>
-                  </div>
     </>
+    
   )
 }
 
