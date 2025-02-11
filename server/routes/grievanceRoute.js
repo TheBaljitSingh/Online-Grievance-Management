@@ -8,7 +8,7 @@ const router = express.Router();
 router.route("/createGrievance").post(isAuthenticated, createGrievance);
 router.route('/:grievanceNumber/status').get(grievanceStatus);
 router.route("/:grievanceNumber").put(updateGrievance)
-router.route("/:grievanceNumber").get(grievanceDetails);
+router.route("/:grievanceNumber([0-9]+)").get(grievanceDetails);
 /*
 
 Greivance 
