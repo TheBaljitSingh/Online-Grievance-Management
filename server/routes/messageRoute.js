@@ -13,5 +13,7 @@ router.route("/getfilteredMessageforUser").get(isAuthenticated, getFilteredMessa
 // admin:
 // admin will fetch the user message which it click on it
 
+router.route("/")
+
 
 export default router;

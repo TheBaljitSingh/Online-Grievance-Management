@@ -63,7 +63,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("admin-reply", (message)=>{
-    io.to(message.recipientId).emit("receive-message", message);
+    console.log("Received message from admin ", message)
+    io.to(message.recipientSocketId).emit("receive-message", message);
+
   })
 
 

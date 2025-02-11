@@ -4,6 +4,7 @@ import { io } from "socket.io-client";
 import Navbar from "./Navbar";
 import { useNavigate } from "react-router";
 import { useAuth } from "../context/AuthContext";
+import axios from "axios";
 
 export default function ChatUser() {
   const navigate = useNavigate();
@@ -13,9 +14,40 @@ export default function ChatUser() {
   const socket = useRef(null);
 
 
+  console.log(messages);
+
+
+
+
+
   const [currentUserId , setCurrentUserId ] = useState();
+
+  const [adminId, setAdminId] = useState('67912ae6e69724b72e03684d'); // is the method right???
+
+
+  const fetchMessages = async () => {
+    try {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND}/api/v1/getfilteredMessageforUser/`,{params: {senderId : user._id} , withCredentials: true}) ;
+        return response.data.messages; // Assuming API response has a `messages` array
+    } catch (error) {
+        console.error("Error fetching messages:", error);
+        return [];
+    }
+};
+
   useEffect(() => {
     if (!user) return navigate("/login");
+
+
+
+
+    const getMessages = async () => {
+      const fetchedMessages = await fetchMessages();
+      console.log(fetchedMessages);
+      setMessages(fetchedMessages);
+    };
+
+  getMessages();
 
     socket.current = io(import.meta.env.VITE_BACKEND);
 
@@ -33,6 +65,7 @@ export default function ChatUser() {
 
     // Listen to incoming messages
     socket.current.on("receive-message", (message) => {
+      console.log("received from adming ", message)
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
@@ -53,18 +86,35 @@ export default function ChatUser() {
 
   }, [user]);
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
     //send message to the admin
     e.preventDefault();
   
     const messageData = {
-      senderId: currentUserId, // User's ID
-      recipientId: "admin", // Admin as recipient
+      senderId: currentUserId, 
+      recipientId: "admin", 
       messageContent: newMessage,
       timeStamp: new Date(),
     };
+
+    
   
     socket.current.emit("send-message", messageData);
+
+
+     await axios.post(`${import.meta.env.VITE_BACKEND}/api/v1/sendMessage`,  { message: messageData.messageContent, receiverId: adminId},{ withCredentials: true })
+    .then(res=>{
+
+      console.log("send and saved in db ", res);
+
+    }).catch(e=>{
+      console.log(e);
+    })
+
+    console.log("sended data ", messageData);
+
+    
+
     setMessages((prev) => [...prev, messageData]);
     setNewMessage("");
 
@@ -87,14 +137,15 @@ export default function ChatUser() {
       <div className="flex-grow overflow-y-auto mb-4">
         {messages.map((msg, index) => (
           <div
-            key={index}
-            className={`p-2 mb-2 rounded-md ${
-              msg.senderId === currentUserId ? "bg-green-200 text-right" : "bg-gray-200 text-left"
-            }`}
-          >
-            <p className="text-sm">{msg.messageContent}</p>
+          key={index} className={`p-2 mb-2 rounded-md ${
+            msg.senderId === user._id
+              ? "bg-green-200 text-right" // Messages sent by the current user (admin)
+              : "bg-gray-200 text-left"  // Messages received by the current user
+          }`}
+        >
+            <p className="text-sm">{msg.messageContent || msg.message}</p>
             <span className="text-xs text-gray-500">
-              {new Date(msg.timeStamp).toLocaleTimeString()}
+            {msg.timeStamp ? new Date(msg.timeStamp).toLocaleTimeString() : msg.timeStamp}
             </span>
           </div>
         ))}
