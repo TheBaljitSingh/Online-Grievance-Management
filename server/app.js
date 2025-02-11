@@ -98,9 +98,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 import user from "./routes/userRoute.js";
 import grievance from './routes/grievanceRoute.js';
+import message from "./routes/messageRoute.js"
 
 app.use("/api/v1/", user);
 app.use("/api/v1/", grievance);
+app.use("/api/v1/", message);
 
 app.get("/", function (req, res) {
   res.send("Services are up and running");

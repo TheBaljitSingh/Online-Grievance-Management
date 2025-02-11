@@ -1,14 +1,19 @@
 import mongoose from "mongoose";
 const messageSchema = new mongoose.Schema({
     senderId: {
-      type:  mongoose.Schema.Types.ObjectId
+      type:  mongoose.Schema.Types.ObjectId,
+      require: true
     },
-    // recipientId: {
-    //   type:  mongoose.Schema.Types.ObjectId
-    // },
-    messageContent: String,
+    receiverId: {
+      type:  mongoose.Schema.Types.ObjectId,
+      require: true
+    },
+    message:{
+      type: String,
+      require: true
+    },
+    status: { type: String, default: "sent" },
     timeStamp: Date,
-    status: { type: String, default: "sent" }, // "sent", "delivered", "read"
   });
 
 const Message = mongoose.model("Message", messageSchema);
